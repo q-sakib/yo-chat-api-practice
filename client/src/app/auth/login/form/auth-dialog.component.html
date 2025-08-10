@@ -1,0 +1,102 @@
+<ui5-dialog #loginPopupDialog class=" rounded-[16px] h-[600px] w-[400px] bg-[#EFF1F2]">
+
+  <div
+    class="absolute top-0 left-0 right-0 bottom-[58px] flex flex-col flex-1 p-4 items-start gap-2.5 rounded-t-[16px] rounded-b-none bg-white">
+
+    <!-- === Fixed Header === -->
+    <div class="flex flex-col items-start gap-[56px] self-stretch">
+      <div class="flex flex-col items-start gap-5 self-stretch">
+        <!-- STATIC: header-top-bar -->
+        <div class="header-top-bar flex justify-between items-end self-stretch">
+          <label class="flex items-center gap-2.5 pb-1">
+            Want to Buzzz!!!
+          </label>
+          <div class="flex flex-col items-end pt-2">
+            <img src="assets/yo-logo.svg" alt="Yo Chat Logo" class="h-[24px]" />
+          </div>
+        </div>
+
+        <!-- === Dynamic Title === -->
+        <div class="flex justify-center items-center">
+          {{ title }}
+        </div>
+
+        <!-- === Dynamic Error Message === -->
+        <div *ngIf="error" class="flex items-center w-[368px] h-[32px] rounded-[8px] p-[8px] gap-[6px] bg-[#FFF5F5]">
+          <ui5-icon name="error" class="text-[#F53232]" style="width: 16px; height: 16px;"></ui5-icon>
+          <span class="text-[12px] leading-none">{{ error }}</span>
+        </div>
+
+        <!-- === Dynamic Success Message === -->
+        <div *ngIf="emailSent"
+          class="flex items-center w-[368px] h-[32px] rounded-[8px] p-[8px] gap-[6px] bg-[#F5FAE5]">
+          <ui5-icon name="sys-enter-2" class="text-[#30914C]" style="width: 16px; height: 16px;"></ui5-icon>
+          <span class="text-[12px] leading-none">{{ emailSent }}</span>
+        </div>
+      </div>
+
+      <!-- === Dynamic Section === -->
+      <div class="flex flex-col text-[14px] gap-[38px] w-full">
+        <!-- Use Angular templates or content projection -->
+        <ng-container [ngSwitch]="currentState">
+
+          <!-- Login -->
+          <ng-template [ngSwitchCase]="'login'">
+            <app-login-form [(email)]="email" [(password)]="password" [passwordVisible]="passwordVisible"
+              (toggleVisibility)="togglePasswordVisibility()" (forgot)="switchState('forgot')"
+              (login)="onLoginSubmit()"></app-login-form>
+          </ng-template>
+
+          <!-- Forgot Password -->
+          <ng-template [ngSwitchCase]="'forgot'">
+            <app-forgot-password-form [(email)]="email" (emailSubmitted)="onForgotSubmit($event)"
+              (backToLogin)="switchState('login')"></app-forgot-password-form>
+          </ng-template>
+
+          <!-- Change Password -->
+          <ng-template [ngSwitchCase]="'reset'">
+            <app-change-password-form [(newPassword)]="newPassword" [(confirmPassword)]="confirmPassword"
+              [passwordVisible]="passwordVisible" (toggleVisibility)="togglePasswordVisibility()"
+              (submit)="onPasswordResetSubmit()" (backToLogin)="switchState('login')"></app-change-password-form>
+          </ng-template>
+
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <!-- === Footer === -->
+  <div class="absolute bottom-0 left-0 right-0 flex h-[58px] p-4 justify-end items-center gap-2 self-stretch">
+    <div *ngIf="currentState === 'forgot'" class="flex flex-col items-start flex-grow h-[28px] leading-none">
+      <span class="text-[12px] leading-none">Get access another way?</span>
+      <span class="text-[12px] text-[#0064D9] leading-none cursor-pointer" (click)="switchState('login')">
+        Return to SignIn
+      </span>
+    </div>
+
+    <ui5-button *ngIf="currentState === 'machineboard' || currentState === 'login'" design="Emphasized" type="button" class="h-[26px]"
+      (click)="onLoginSubmit()">
+      Login
+    </ui5-button>
+
+    <ui5-button *ngIf="currentState === 'forgot'" design="Emphasized" type="button" class="h-[26px]"
+      (click)="onForgotSubmit(email)">
+      continue
+    </ui5-button>
+    
+    <ui5-button *ngIf="currentState === 'machineboard' || currentState === 'login'" design="Default" type="button" class="h-[26px]"
+      (click)="onForgotSubmit(email)">
+      Terminal Login
+    </ui5-button>
+
+    <ui5-button *ngIf="currentState === 'machineboard'|| currentState === 'login'" design="Transparent" type="button" class="h-[26px]"
+    (click)="closeDialog()">
+      Close
+    </ui5-button>
+
+    <ui5-button *ngIf="currentState === 'reset'" design="Emphasized" type="button" class="h-[26px]"
+      (click)="onPasswordResetSubmit()">
+      Change Password
+    </ui5-button>
+  </div>
+</ui5-dialog>

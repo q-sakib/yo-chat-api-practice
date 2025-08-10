@@ -1,0 +1,50 @@
+<!-- <aside class="bg-gray-100 border-r overflow-y-auto h-full"> -->
+  <aside class="flex flex-col h-full bg-gray-100 border-r overflow-y-auto">
+
+  <div class="p-4 font-bold text-lg">Users</div>
+  <ul class="space-y-2 p-4">
+    <li *ngFor="let user of users" (click)="selectUser(user)"
+      class="p-2 rounded hover:bg-gray-200 cursor-pointer flex items-center"
+      [class.bg-gray-200]="user.id === selectedUser?.id">
+      <!-- Uncomment and fix the avatar path if you want to show avatars -->
+      <!-- <ui5-avatar size="S" class="mr-3" [image]="user.avatar"></ui5-avatar> -->
+      <span>{{ user.name }}</span>
+    </li>
+  </ul>
+
+
+
+
+<!-- Logged-in User Info & Logout -->
+<div class="border-t p-4 bg-white relative mt-auto">
+  <div class="flex items-center justify-between">
+    <!-- Left: Avatar + Name -->
+    <div class="flex items-center space-x-3">
+      <ui5-avatar size="L" icon="employee"></ui5-avatar>
+      <span class="font-semibold text-gray-800">{{ currentUser?.name || 'User' }}</span>
+    </div>
+
+    <!-- Right: Button with Dropdown trigger -->
+    <div class="relative">
+      <ui5-button design="Transparent" class="p-2 flex items-center gap-1" (click)="toggleLogoutDropdown()">
+        <ui5-icon name="overflow" style="width:16px; height:16px;"></ui5-icon>
+        <ui5-icon name="slim-arrow-down" style="width:16px; height:16px;"></ui5-icon>
+      </ui5-button>
+
+      <!-- Dropdown positioned left side of the button -->
+      <div *ngIf="showLogoutDropdown"
+        class="absolute right-full top-1/2 transform -translate-y-1/2 mr-2 w-36 bg-white border border-gray-200 rounded shadow-lg z-20">
+        <ui5-button design="Transparent" icon="log"
+          class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-100" (click)="onLogout()">
+          Logout
+        </ui5-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <ui5-button icon="paper-plane" design="Emphasized" class="absolute bottom-4 left-4" (click)="emitMessage()">Send Message</ui5-button> -->
+
+</aside>

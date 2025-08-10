@@ -1,0 +1,5 @@
+<ui5-input [value]="value" [type]="type" [placeholder]="placeholder" [disabled]="disabled" [required]="required"
+  [name]="name" [id]="id" [maxlength]="maxlength" [autocomplete]="autocomplete" [attr.class]="class"
+  [attr.style]="style" (input)="handleInput($event)">
+  <ng-content></ng-content> <!-- for projecting icons, etc. -->
+</ui5-input>

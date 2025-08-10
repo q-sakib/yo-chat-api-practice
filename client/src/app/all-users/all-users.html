@@ -1,0 +1,11 @@
+@if (error) {
+<div class="error">{{ error }}</div>
+} @else if (users.length === 0) {
+<p>No users found.</p>
+} @else {
+<ul>
+  @for (user of users; track user.id) {
+  <li>{{ user.name }} (ID: {{ user.id }})</li>
+  }
+</ul>
+}

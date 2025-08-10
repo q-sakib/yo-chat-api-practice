@@ -1,0 +1,24 @@
+<div class="grid grid-cols-[25%_1fr] h-screen">
+
+  <!-- Sidebar -->
+  <!-- <app-sidebar [users]="users" [selectedUser]="selectedUser" (userSelected)="onUserSelected($event)">
+  </app-sidebar> -->
+
+  <app-sidebar [users]="users" [selectedUser]="selectedUser" [currentUser]="currentUser"
+    (userSelected)="onUserSelected($event)" (logout)="handleLogout()"></app-sidebar>
+
+
+  <!-- Main Content Area -->
+  <div class="flex flex-col">
+
+    <!-- Header: Stays at top -->
+    <app-header [selectedUser]="selectedUser"></app-header>
+
+    <!-- Body: Grows to fill rest of height -->
+    <div class="flex-1 overflow-hidden">
+      <app-body [messages]="messages" [currentUser]="currentUser" (send)="sendMessage($event)">
+      </app-body>
+    </div>
+  </div>
+
+</div>

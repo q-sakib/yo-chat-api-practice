@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+/* UI5 theme override (optional) */
+/* @import "@ui5/webcomponents/dist/Assets/Min.css"; */
+body {
+	/* width: 1544px;
+	height: 901px; */
+	flex-shrink: 0;
+	background: #EFF1F2;
+}
+
+ui5-dialog::part(content) {
+  padding: 0 !important;
+  margin: 0 !important;
+}
